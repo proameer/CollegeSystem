@@ -14,15 +14,19 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('age');
+            $table->string('email')->unique();
+            $table->string('birthday');
             $table->string('address');
             $table->string('phone');
-            $table->unsignedBigInteger('city_id');
-            $table->unsignedBigInteger('stage_id');
+            $table->string('image');
+            $table->unsignedBigInteger('city_id')->default(null);
+            $table->unsignedBigInteger('stage_id')->default(null);
+            $table->unsignedBigInteger('gender_id')->default(null);
             $table->timestamps();
 
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('stage_id')->references('id')->on('stages')->onDelete('cascade');
+            $table->foreign('gender_id')->references('id')->on('genders')->onDelete('cascade');
         });
     }
 

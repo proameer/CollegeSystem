@@ -21,7 +21,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -29,7 +29,16 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-        //
+        // dd($request);
+        if($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time().'.'. $file->extension();
+            $file->move(public_path('upload'), $fileName);
+        }
+
+        $student = Student::create($request->only('name', 'email','address' ,'phone','birthday','stage_id ','gender_id ','city_id ') + [
+            'image' => $fileName ?? null,
+        ]);
     }
 
     /**
@@ -37,7 +46,6 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
     }
 
     /**
